@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
 const categories = [
@@ -7,6 +8,27 @@ const categories = [
   { title: "Database", items: ["PostgreSQL", "MySQL"] },
   { title: "Tools & Concepts", items: ["JWT", "WebSockets", "Sequelize ORM", "Git"] },
 ];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20, filter: "blur(2px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+  },
+};
 
 const Skills = () => (
   <section id="skills" className="section-padding bg-card/50">
@@ -23,28 +45,39 @@ const Skills = () => (
         </h2>
       </ScrollReveal>
 
-      <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories.map((cat, i) => (
-          <ScrollReveal key={cat.title} delay={0.08 * i}>
-            <div className="p-6 rounded-xl bg-card border border-border hover:border-primary/30 hover:glow-sm transition-all duration-300 h-full">
+      <motion.div
+        className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.2 }}
+        variants={containerVariants}
+      >
+        {categories.map((cat) => (
+          <motion.div key={cat.title} variants={itemVariants}>
+            <motion.div 
+              className="p-6 rounded-xl bg-card border border-border hover:border-primary/50 hover:glow-md transition-all duration-300 h-full cursor-pointer"
+              whileHover={{ scale: 1.02, y: -4 }}
+              transition={{ duration: 0.2 }}
+            >
               <h3 className="text-sm font-bold text-foreground uppercase tracking-wide mb-4 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-primary" />
                 {cat.title}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {cat.items.map((item) => (
-                  <span
+                  <motion.span
                     key={item}
                     className="inline-block rounded-full bg-secondary text-secondary-foreground text-xs font-medium px-3 py-1.5 hover:bg-accent hover:text-accent-foreground transition-colors duration-200"
+                    whileHover={{ scale: 1.05 }}
                   >
                     {item}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
-            </div>
-          </ScrollReveal>
+            </motion.div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   </section>
 );
