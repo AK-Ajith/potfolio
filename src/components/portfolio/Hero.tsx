@@ -9,6 +9,9 @@ const DecorativeStar = ({ className }: { className?: string }) => (
 );
 
 const Hero = () => {
+  // Disable animations on low-end devices for better mobile performance
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  
   return (
     <section className="min-h-screen flex items-center justify-center section-padding pt-32 relative overflow-hidden">
       {/* Decorative elements */}
@@ -28,7 +31,7 @@ const Hero = () => {
       </motion.div>
 
       {/* Glow orb */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] rounded-full bg-primary/5 blur-[80px] md:blur-[100px] lg:blur-[120px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <motion.div
